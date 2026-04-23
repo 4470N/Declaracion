@@ -1573,27 +1573,26 @@
     </div>
   </div>
 
-
-  <!-- PANTALLA ÉXITO -->
-  <div id="screenOk">
-    <div class="screen-card">
-      <div class="screen-icon">✅</div>
-      <h2>¡Declaración enviada con éxito!</h2>
-      <p>Tu declaración jurada fue recibida correctamente.<br>Te contactaremos a la brevedad para continuar con el trámite.</p>
-    </div>
-  </div>
-
-  <!-- PANTALLA ERROR -->
-  <div id="screenError">
-    <div class="screen-card" style="border-top: 4px solid var(--rojo);">
-      <div class="screen-icon">⚠️</div>
-      <h2 style="color:var(--rojo)">No se pudo enviar</h2>
-      <p>Ocurrió un error al enviar tu declaración. Por favor, intentá de nuevo o contactanos directamente.</p>
-      <button class="btn btn-secondary" style="margin-top:16px" onclick="resetError()">Reintentar</button>
-    </div>
-  </div>
-
 </div><!-- /container -->
+
+<!-- PANTALLA ÉXITO -->
+<div id="screenOk">
+  <div class="screen-card">
+    <div class="screen-icon">✅</div>
+    <h2>¡Declaración enviada con éxito!</h2>
+    <p>Tu declaración jurada fue recibida correctamente.<br>Te contactaremos a la brevedad para continuar con el trámite.</p>
+  </div>
+</div>
+
+<!-- PANTALLA ERROR -->
+<div id="screenError">
+  <div class="screen-card" style="border-top: 4px solid var(--rojo);">
+    <div class="screen-icon">⚠️</div>
+    <h2 style="color:var(--rojo)">No se pudo enviar</h2>
+    <p>Ocurrió un error al enviar tu declaración. Por favor, intentá de nuevo o contactanos directamente.</p>
+    <button class="btn btn-secondary" style="margin-top:16px" onclick="resetError()">Reintentar</button>
+  </div>
+</div>
 
 <script>
   const WEBHOOK_URL = "https://listing-mississippi-reliability-none.trycloudflare.com/webhook/declaracion-siniestro";
