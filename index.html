@@ -1342,6 +1342,27 @@
           </div>
         </div>
         <div class="divider"></div>
+        <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:0.3px;">🪪 DNI del Conductor</div>
+        <div class="info-box" style="margin-bottom:12px;">En caso de que el titular no sea quien conducía, adjuntar DNI del conductor.</div>
+        <div class="file-grid">
+          <div class="file-item">
+            <label>DNI Conductor – Frente</label>
+            <div class="file-drop" id="drop-dni-conductor-frente">
+              <span class="icon">🪪</span>
+              <div class="file-label">Tocá para subir</div>
+              <input type="file" id="dni_conductor_frente" accept="image/*,.pdf" onchange="handleFile(this,'drop-dni-conductor-frente')">
+            </div>
+          </div>
+          <div class="file-item">
+            <label>DNI Conductor – Dorso</label>
+            <div class="file-drop" id="drop-dni-conductor-dorso">
+              <span class="icon">🪪</span>
+              <div class="file-label">Tocá para subir</div>
+              <input type="file" id="dni_conductor_dorso" accept="image/*,.pdf" onchange="handleFile(this,'drop-dni-conductor-dorso')">
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
         <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:0.3px;">📸 Fotos del Vehículo del Asegurado</div>
         <div class="file-grid">
           <div class="file-item">
@@ -1723,7 +1744,8 @@ function clearErrors(step) {
 
     try {
       const [dniFrenteB64, dniDorsoB64, cedulaFrenteB64, cedulaDorsoB64, licFrenteB64, licDorsoB64,
-             fotoAsegurado1B64, fotoAsegurado2B64, fotoTercero1B64, fotoTercero2B64] =
+             fotoAsegurado1B64, fotoAsegurado2B64, fotoTercero1B64, fotoTercero2B64,
+             dniCondFrenteB64, dniCondDorsoB64] =
         await Promise.all([
           fileToBase64(document.getElementById("dni_frente").files[0]),
           fileToBase64(document.getElementById("dni_dorso").files[0]),
@@ -1735,6 +1757,8 @@ function clearErrors(step) {
           fileToBase64(document.getElementById("foto_asegurado_2").files[0]),
           fileToBase64(document.getElementById("foto_tercero_1").files[0]),
           fileToBase64(document.getElementById("foto_tercero_2").files[0]),
+          fileToBase64(document.getElementById("dni_conductor_frente")?.files[0]),
+          fileToBase64(document.getElementById("dni_conductor_dorso")?.files[0]),
         ]);
 
       const g = id => document.getElementById(id)?.value?.trim() || "";
@@ -1856,10 +1880,12 @@ function clearErrors(step) {
         cedula_dorso:       cedulaDorsoB64,
         licencia_frente:    licFrenteB64,
         licencia_dorso:     licDorsoB64,
-        foto_asegurado_1:   fotoAsegurado1B64,
-        foto_asegurado_2:   fotoAsegurado2B64,
-        foto_tercero_1:     fotoTercero1B64,
-        foto_tercero_2:     fotoTercero2B64,
+        foto_asegurado_1:       fotoAsegurado1B64,
+        foto_asegurado_2:       fotoAsegurado2B64,
+        foto_tercero_1:         fotoTercero1B64,
+        foto_tercero_2:         fotoTercero2B64,
+        dni_conductor_frente:   dniCondFrenteB64,
+        dni_conductor_dorso:    dniCondDorsoB64,
       };
 
       const res = await fetch(WEBHOOK_URL, {
