@@ -746,16 +746,6 @@
             <input type="time" id="hora">
           </div>
         </div>
-        <div class="row-2">
-          <div class="field">
-            <label>Vencimiento de licencia</label>
-            <input type="date" id="vencimiento_licencia" min="1900-01-01" max="2099-12-31">
-          </div>
-          <div class="field">
-            <label>Velocidad estimada (km/h)</label>
-            <input type="text" id="velocidad" placeholder="Ej: 40" maxlength="3" inputmode="numeric" data-filter="numbers">
-          </div>
-        </div>
         <div class="field">
           <label>Calle / Ruta donde ocurrió el hecho</label>
           <input type="text" id="calle" placeholder="Nombre de la calle, ruta o autopista" maxlength="25" data-filter="letters">
@@ -780,29 +770,13 @@
             <input type="text" id="destino" placeholder="Destino" maxlength="25" data-filter="letters">
           </div>
         </div>
-        <div class="row-2">
-          <div class="field">
-            <label>Mano de circulación</label>
-            <select id="mano_circulacion">
-              <option value="">Seleccionar</option>
-              <option>Mano unica</option>
-              <option>Doble mano</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Dirección de marcha</label>
-            <select id="direccion">
-              <option value="">Seleccionar</option>
-              <option>Norte</option>
-              <option>Sur</option>
-              <option>Este</option>
-              <option>Oeste</option>
-            </select>
-          </div>
-        </div>
         <div class="field">
-          <label>Terceros involucrados</label>
-          <input type="text" id="terceros" placeholder="Indicar si hubo terceros, cantidad" maxlength="50">
+          <label>Mano de circulación</label>
+          <select id="mano_circulacion">
+            <option value="">Seleccionar</option>
+            <option>Mano unica</option>
+            <option>Doble mano</option>
+          </select>
         </div>
         <div class="field">
           <label>Descripción del hecho <span class="req">*</span></label>
@@ -1575,7 +1549,7 @@
     e.target.setSelectionRange(pos, pos);
   });
 
-  ["a_los_dias", "dia_siniestro", "vencimiento_licencia"].forEach(function(id) {
+  ["a_los_dias", "dia_siniestro"].forEach(function(id) {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener("input", function() {
@@ -2126,16 +2100,12 @@ function clearErrors(step) {
         conductor_dni:      g("conductor_dni"),
         conductor_domicilio:g("conductor_domicilio"),
         conductor_telefono: g("conductor_telefono"),
-        vencimiento_licencia: g("vencimiento_licencia"),
-        velocidad:          g("velocidad"),
         calle:              g("calle"),
         localidad_hecho:    g("localidad_hecho"),
         interseccion:       g("interseccion"),
         procedente:         g("procedente"),
         destino:            g("destino"),
         mano_circulacion:   gv("mano_circulacion"),
-        direccion:          gv("direccion"),
-        terceros:           g("terceros"),
         descripcion_hecho:  g("descripcion_hecho"),
         // PASO 3
         desc_lugar:         gv("desc_lugar"),
