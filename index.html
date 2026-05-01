@@ -650,15 +650,9 @@
           <label>Domicilio</label>
           <input type="text" id="domicilio" placeholder="Calle y número" maxlength="40">
         </div>
-        <div class="row-2">
-          <div class="field">
-            <label>Localidad</label>
-            <input type="text" id="localidad" placeholder="Ciudad / Localidad" maxlength="20" data-filter="letters">
-          </div>
-          <div class="field">
-            <label>Vínculo con el asegurado</label>
-            <input type="text" id="vinculo" placeholder="Ej: Titular, Familiar, Empleado" maxlength="10" data-filter="letters">
-          </div>
+        <div class="field">
+          <label>Localidad</label>
+          <input type="text" id="localidad" placeholder="Ciudad / Localidad" maxlength="20" data-filter="letters">
         </div>
       </div>
     </div>
@@ -667,19 +661,9 @@
     <div class="section-card">
       <div class="section-title">📋 Datos de Póliza y Vehículo Asegurado</div>
       <div class="section-body">
-        <div class="row-3">
-          <div class="field">
-            <label>N° de Póliza</label>
-            <input type="text" id="poliza_nro" placeholder="Número" maxlength="10" data-filter="numbers">
-          </div>
-          <div class="field">
-            <label>Riesgo Cubierto</label>
-            <input type="text" id="riesgo_cubierto" placeholder="Ej: R-C" value="R-C" maxlength="10">
-          </div>
-          <div class="field">
-            <label>Patente / Dominio</label>
-            <input type="text" id="dominio" placeholder="ABC123" style="text-transform:uppercase" maxlength="7">
-          </div>
+        <div class="field">
+          <label>Patente / Dominio</label>
+          <input type="text" id="dominio" placeholder="ABC123" style="text-transform:uppercase" maxlength="7">
         </div>
         <div class="row-3">
           <div class="field">
@@ -693,16 +677,6 @@
           <div class="field">
             <label>Año</label>
             <input type="text" id="anio_unidad" placeholder="2020" maxlength="4" inputmode="numeric" data-filter="numbers">
-          </div>
-        </div>
-        <div class="row-2">
-          <div class="field">
-            <label>N° de Motor</label>
-            <input type="text" id="motor_nro" placeholder="Número de motor" maxlength="20">
-          </div>
-          <div class="field">
-            <label>N° de Chasis</label>
-            <input type="text" id="chasis_nro" placeholder="Número de chasis" maxlength="20">
           </div>
         </div>
         <div class="field">
@@ -2104,16 +2078,11 @@ function clearErrors(step) {
         correo:             g("correo"),
         domicilio:          g("domicilio"),
         localidad:          g("localidad"),
-        vinculo:            g("vinculo"),
         // Póliza y vehículo
-        poliza_nro:         g("poliza_nro"),
-        riesgo_cubierto:    g("riesgo_cubierto"),
         dominio:            g("dominio"),
         marca_unidad:       g("marca_unidad"),
         modelo_unidad:      g("modelo_unidad"),
         anio_unidad:        g("anio_unidad"),
-        motor_nro:          g("motor_nro"),
-        chasis_nro:         g("chasis_nro"),
         color_vehiculo:     g("color_vehiculo"),
         // PASO 2
         dia_siniestro:      g("dia_siniestro"),
