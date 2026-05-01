@@ -1475,6 +1475,31 @@
             </div>
           </div>
         </div>
+        <div class="divider"></div>
+        <button type="button" id="btn-doc-adicional" onclick="toggleDocAdicional()" style="display:flex;align-items:center;gap:8px;background:none;border:2px dashed var(--navy);color:var(--navy);font-size:13px;font-weight:700;padding:10px 18px;border-radius:8px;cursor:pointer;width:100%;justify-content:center;letter-spacing:0.3px;">
+          <span id="icon-doc-adicional">📎</span> Documentación adicional <span id="arrow-doc-adicional" style="margin-left:4px;">▼</span>
+        </button>
+        <div id="sec-doc-adicional" style="display:none;margin-top:14px;">
+          <div class="info-box" style="margin-bottom:12px;">Podés adjuntar documentos complementarios al expediente. Ej: alcoholemia, denuncia policial, informe médico, etc.</div>
+          <div class="file-grid">
+            <div class="file-item">
+              <label>Documento adicional 1</label>
+              <div class="file-drop" id="drop-doc-adicional-1">
+                <span class="icon">📄</span>
+                <div class="file-label">Tocá para subir</div>
+                <input type="file" id="doc_adicional_1" accept="image/*,.pdf" onchange="handleFile(this,'drop-doc-adicional-1')">
+              </div>
+            </div>
+            <div class="file-item">
+              <label>Documento adicional 2</label>
+              <div class="file-drop" id="drop-doc-adicional-2">
+                <span class="icon">📄</span>
+                <div class="file-label">Tocá para subir</div>
+                <input type="file" id="doc_adicional_2" accept="image/*,.pdf" onchange="handleFile(this,'drop-doc-adicional-2')">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1742,6 +1767,14 @@ function clearErrors(step) {
     cond.className = "conditional " + (val === "si" ? "visible" : "hidden");
   }
 
+  function toggleDocAdicional() {
+    const sec = document.getElementById("sec-doc-adicional");
+    const arrow = document.getElementById("arrow-doc-adicional");
+    const open = sec.style.display === "none";
+    sec.style.display = open ? "block" : "none";
+    arrow.textContent = open ? "▲" : "▼";
+  }
+
   // ── Terceros Transportados – dinámico ──
   let _tTNextId = 2, _tTCount = 1;
 
@@ -2000,7 +2033,8 @@ function clearErrors(step) {
       const [dniFrenteB64, dniDorsoB64, cedulaFrenteB64, cedulaDorsoB64, licFrenteB64, licDorsoB64,
              fotoAutoAdelanteB64, fotoAutoAtrasB64, fotoAutoIzquierdoB64, fotoAutoDerechoB64,
              fotoTercero1B64, fotoTercero2B64,
-             dniCondFrenteB64, dniCondDorsoB64] =
+             dniCondFrenteB64, dniCondDorsoB64,
+             docAdicional1B64, docAdicional2B64] =
         await Promise.all([
           fileToBase64(document.getElementById("dni_frente").files[0]),
           fileToBase64(document.getElementById("dni_dorso").files[0]),
@@ -2016,6 +2050,8 @@ function clearErrors(step) {
           fileToBase64(document.getElementById("foto_tercero_2").files[0]),
           fileToBase64(document.getElementById("dni_conductor_frente")?.files[0]),
           fileToBase64(document.getElementById("dni_conductor_dorso")?.files[0]),
+          fileToBase64(document.getElementById("doc_adicional_1")?.files[0]),
+          fileToBase64(document.getElementById("doc_adicional_2")?.files[0]),
         ]);
 
       const g = id => document.getElementById(id)?.value?.trim() || "";
@@ -2174,6 +2210,8 @@ function clearErrors(step) {
         foto_tercero_2:         fotoTercero2B64,
         dni_conductor_frente:   dniCondFrenteB64,
         dni_conductor_dorso:    dniCondDorsoB64,
+        doc_adicional_1:        docAdicional1B64,
+        doc_adicional_2:        docAdicional2B64,
       };
 
       const res = await fetch(WEBHOOK_URL, {
