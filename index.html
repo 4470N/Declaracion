@@ -872,55 +872,54 @@
         <div class="row-2">
           <div class="field">
             <label>¿Se labraron Actuaciones penales?</label>
-            <select id="actuaciones_penales">
-              <option value="">Seleccionar</option>
-              <option>Si</option>
-              <option>No</option>
-
-            </select>
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn" id="btn-actuaciones_penales-si" onclick="setToggle('actuaciones_penales','Si')">✅ Sí</button>
+              <button type="button" class="toggle-btn" id="btn-actuaciones_penales-no" onclick="setToggle('actuaciones_penales','No')">❌ No</button>
+            </div>
+            <input type="hidden" id="actuaciones_penales" value="">
           </div>
           <div class="field">
             <label>¿Se extrajo sangre para alcoholemia?</label>
-            <select id="alcoholemia">
-              <option value="">Seleccionar</option>
-              <option>Si</option>
-              <option>No</option>
-            </select>
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn" id="btn-alcoholemia-si" onclick="setToggle('alcoholemia','Si')">✅ Sí</button>
+              <button type="button" class="toggle-btn" id="btn-alcoholemia-no" onclick="setToggle('alcoholemia','No')">❌ No</button>
+            </div>
+            <input type="hidden" id="alcoholemia" value="">
           </div>
         </div>
         <div class="field">
           <label>¿Ingirió bebidas alcohólicas y/o estupefacientes?</label>
-          <select id="ingirio">
-            <option value="">Seleccionar</option>
-            <option>Si</option>
-            <option>No</option>
-          </select>
+          <div class="toggle-group">
+            <button type="button" class="toggle-btn" id="btn-ingirio-si" onclick="setToggle('ingirio','Si')">✅ Sí</button>
+            <button type="button" class="toggle-btn" id="btn-ingirio-no" onclick="setToggle('ingirio','No')">❌ No</button>
+          </div>
+          <input type="hidden" id="ingirio" value="">
         </div>
         <div class="row-2">
           <div class="field">
             <label>Intervención Policial</label>
-            <select id="intervencion_policial">
-              <option value="">Seleccionar</option>
-              <option>Si</option>
-              <option>No</option>
-            </select>
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn" id="btn-intervencion_policial-si" onclick="setToggle('intervencion_policial','Si')">✅ Sí</button>
+              <button type="button" class="toggle-btn" id="btn-intervencion_policial-no" onclick="setToggle('intervencion_policial','No')">❌ No</button>
+            </div>
+            <input type="hidden" id="intervencion_policial" value="">
           </div>
           <div class="field">
             <label>Intervención Hospitalaria</label>
-            <select id="intervencion_hospitalaria">
-              <option value="">Seleccionar</option>
-              <option>Si</option>
-              <option>No</option>
-            </select>
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn" id="btn-intervencion_hospitalaria-si" onclick="setToggle('intervencion_hospitalaria','Si')">✅ Sí</button>
+              <button type="button" class="toggle-btn" id="btn-intervencion_hospitalaria-no" onclick="setToggle('intervencion_hospitalaria','No')">❌ No</button>
+            </div>
+            <input type="hidden" id="intervencion_hospitalaria" value="">
           </div>
         </div>
         <div class="field">
           <label>Causa Penal</label>
-          <select id="causa_penal">
-            <option value="">Seleccionar</option>
-            <option>Si</option>
-            <option>No</option>
-          </select>
+          <div class="toggle-group">
+            <button type="button" class="toggle-btn" id="btn-causa_penal-si" onclick="setToggle('causa_penal','Si')">✅ Sí</button>
+            <button type="button" class="toggle-btn" id="btn-causa_penal-no" onclick="setToggle('causa_penal','No')">❌ No</button>
+          </div>
+          <input type="hidden" id="causa_penal" value="">
         </div>
       </div>
     </div>
@@ -1718,6 +1717,15 @@ function clearErrors(step) {
       return false;
     }
     return true;
+  }
+
+  // ── Toggle genérico Si/No ──
+  function setToggle(name, val) {
+    document.getElementById(name).value = val;
+    const si = document.getElementById('btn-' + name + '-si');
+    const no = document.getElementById('btn-' + name + '-no');
+    if (si) si.className = 'toggle-btn' + (val === 'Si' ? ' active-si' : '');
+    if (no) no.className = 'toggle-btn' + (val === 'No' ? ' active-no' : '');
   }
 
   // ── Toggle Si/No: Reparación ──
