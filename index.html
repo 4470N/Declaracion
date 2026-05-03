@@ -1932,13 +1932,32 @@ function clearErrors(step) {
     }
   }
 
-  function fileToBase64(file) {
+  function fileToBase64(file, maxDim = 1200, quality = 0.75) {
     return new Promise((res, rej) => {
       if (!file) return res(null);
-      const r = new FileReader();
-      r.onload  = () => res(r.result);
-      r.onerror = () => rej(r.error);
-      r.readAsDataURL(file);
+      if (!file.type.startsWith('image/')) {
+        const r = new FileReader();
+        r.onload  = () => res(r.result);
+        r.onerror = () => rej(r.error);
+        r.readAsDataURL(file);
+        return;
+      }
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
+          else { width = Math.round(width * maxDim / height); height = maxDim; }
+        }
+        const c = document.createElement('canvas');
+        c.width = width; c.height = height;
+        c.getContext('2d').drawImage(img, 0, 0, width, height);
+        res(c.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('Error al cargar imagen')); };
+      img.src = url;
     });
   }
 
