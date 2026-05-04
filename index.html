@@ -876,7 +876,7 @@
       <div class="section-body">
         <div class="row-2" style="margin-bottom:15px;">
           <div class="field" style="display:flex;flex-direction:column;margin-bottom:0;">
-            <label style="flex:1;">¿Se labraron Actuaciones penales? <span class="req">*</span></label>
+            <label style="flex:1;text-align:center;">¿Se labraron Actuaciones penales? <span class="req">*</span></label>
             <div class="toggle-group">
               <button type="button" class="toggle-btn" id="btn-actuaciones_penales-si" onclick="setToggle('actuaciones_penales','Si')">✅ Sí</button>
               <button type="button" class="toggle-btn" id="btn-actuaciones_penales-no" onclick="setToggle('actuaciones_penales','No')">❌ No</button>
@@ -884,7 +884,7 @@
             <input type="hidden" id="actuaciones_penales" value="">
           </div>
           <div class="field" style="display:flex;flex-direction:column;margin-bottom:0;">
-            <label style="flex:1;">¿Se extrajo sangre para alcoholemia? <span class="req">*</span></label>
+            <label style="flex:1;text-align:center;">¿Se extrajo sangre para alcoholemia? <span class="req">*</span></label>
             <div class="toggle-group">
               <button type="button" class="toggle-btn" id="btn-alcoholemia-si" onclick="setToggle('alcoholemia','Si')">✅ Sí</button>
               <button type="button" class="toggle-btn" id="btn-alcoholemia-no" onclick="setToggle('alcoholemia','No')">❌ No</button>
@@ -894,7 +894,7 @@
         </div>
         <div class="row-2" style="margin-bottom:15px;">
           <div class="field" style="display:flex;flex-direction:column;margin-bottom:0;">
-            <label style="flex:1;">¿Ingirió bebidas alcohólicas y/o estupefacientes? <span class="req">*</span></label>
+            <label style="flex:1;text-align:center;">¿Ingirió bebidas alcohólicas y/o estupefacientes? <span class="req">*</span></label>
             <div class="toggle-group">
               <button type="button" class="toggle-btn" id="btn-ingirio-si" onclick="setToggle('ingirio','Si')">✅ Sí</button>
               <button type="button" class="toggle-btn" id="btn-ingirio-no" onclick="setToggle('ingirio','No')">❌ No</button>
@@ -902,7 +902,7 @@
             <input type="hidden" id="ingirio" value="">
           </div>
           <div class="field" style="display:flex;flex-direction:column;margin-bottom:0;">
-            <label style="flex:1;">Causa Penal <span class="req">*</span></label>
+            <label style="flex:1;text-align:center;">Causa Penal <span class="req">*</span></label>
             <div class="toggle-group">
               <button type="button" class="toggle-btn" id="btn-causa_penal-si" onclick="setToggle('causa_penal','Si')">✅ Sí</button>
               <button type="button" class="toggle-btn" id="btn-causa_penal-no" onclick="setToggle('causa_penal','No')">❌ No</button>
@@ -912,7 +912,7 @@
         </div>
         <div class="row-2">
           <div class="field" style="display:flex;flex-direction:column;margin-bottom:0;">
-            <label style="flex:1;">Intervención Policial <span class="req">*</span></label>
+            <label style="flex:1;text-align:center;">Intervención Policial <span class="req">*</span></label>
             <div class="toggle-group">
               <button type="button" class="toggle-btn" id="btn-intervencion_policial-si" onclick="setToggle('intervencion_policial','Si')">✅ Sí</button>
               <button type="button" class="toggle-btn" id="btn-intervencion_policial-no" onclick="setToggle('intervencion_policial','No')">❌ No</button>
@@ -920,7 +920,7 @@
             <input type="hidden" id="intervencion_policial" value="">
           </div>
           <div class="field" style="display:flex;flex-direction:column;margin-bottom:0;">
-            <label style="flex:1;">Intervención Hospitalaria <span class="req">*</span></label>
+            <label style="flex:1;text-align:center;">Intervención Hospitalaria <span class="req">*</span></label>
             <div class="toggle-group">
               <button type="button" class="toggle-btn" id="btn-intervencion_hospitalaria-si" onclick="setToggle('intervencion_hospitalaria','Si')">✅ Sí</button>
               <button type="button" class="toggle-btn" id="btn-intervencion_hospitalaria-no" onclick="setToggle('intervencion_hospitalaria','No')">❌ No</button>
@@ -1783,6 +1783,14 @@ function clearErrors(step) {
     if (raw.length <= 2)      input.value = raw;
     else if (raw.length <= 4) input.value = raw.slice(0,2) + '/' + raw.slice(2);
     else                      input.value = raw.slice(0,2) + '/' + raw.slice(2,4) + '/' + raw.slice(4);
+    if (raw.length === 8) {
+      var anio = parseInt(raw.slice(4), 10);
+      var hoy  = new Date().getFullYear();
+      if (anio < 2000 || anio > hoy) {
+        input.value = raw.slice(0,2) + '/' + raw.slice(2,4) + '/';
+        input.style.borderColor = 'var(--rojo)';
+      } else { input.style.borderColor = ''; }
+    } else { input.style.borderColor = ''; }
   }
 
   // ── Toggle genérico Si/No ──
