@@ -664,7 +664,7 @@
         </div>
         <div class="field">
           <label>Fecha de declaración <span class="req">*</span></label>
-          <input type="text" id="a_los_dias" placeholder="dd/mm/aaaa" maxlength="10" oninput="formatFecha(this)">
+          <input type="text" id="a_los_dias" placeholder="dd/mm/aaaa" maxlength="10" oninput="formatFecha(this)" onblur="validarFecha(this)">
         </div>
       </div>
     </div>
@@ -749,7 +749,7 @@
         <div class="row-2">
           <div class="field">
             <label>Fecha del Siniestro <span class="req">*</span></label>
-            <input type="text" id="dia_siniestro" placeholder="dd/mm/aaaa" maxlength="10" oninput="formatFecha(this)">
+            <input type="text" id="dia_siniestro" placeholder="dd/mm/aaaa" maxlength="10" oninput="formatFecha(this)" onblur="validarFecha(this)">
           </div>
           <div class="field">
             <label>Hora aproximada <span class="req">*</span></label>
@@ -1744,6 +1744,16 @@ function clearErrors(step) {
       }
     }
 
+    // Validar formato de fechas
+    const fechasPorPaso = { 1: ['a_los_dias'], 2: ['dia_siniestro'] };
+    for (const id of (fechasPorPaso[step] || [])) {
+      const el = document.getElementById(id);
+      if (el && el.value.trim() && !validarFecha(el)) {
+        if (!firstInvalid) firstInvalid = el;
+        hasErrors = true;
+      }
+    }
+
     // Validar archivos requeridos
     for (const id of (requiredFiles[step] || [])) {
       const el = document.getElementById(id);
@@ -1780,20 +1790,27 @@ function clearErrors(step) {
 
   function formatFecha(input) {
     var raw = input.value.replace(/\D/g, '').slice(0, 8);
-    if (raw.length >= 2 && (parseInt(raw.slice(0,2),10) < 1 || parseInt(raw.slice(0,2),10) > 31))
-      raw = raw.slice(0,1);
-    if (raw.length >= 4 && (parseInt(raw.slice(2,4),10) < 1 || parseInt(raw.slice(2,4),10) > 12))
-      raw = raw.slice(0,3);
     if (raw.length <= 2)      input.value = raw;
     else if (raw.length <= 4) input.value = raw.slice(0,2) + '/' + raw.slice(2);
     else                      input.value = raw.slice(0,2) + '/' + raw.slice(2,4) + '/' + raw.slice(4);
-    if (raw.length === 8) {
-      var anio = parseInt(raw.slice(4), 10);
-      if (anio < 2000 || anio > new Date().getFullYear()) {
-        input.value = raw.slice(0,2) + '/' + raw.slice(2,4) + '/';
-        input.style.borderColor = 'var(--rojo)';
-      } else { input.style.borderColor = ''; }
-    } else { input.style.borderColor = ''; }
+    if (input.style.borderColor) input.style.borderColor = '';
+  }
+
+  function validarFecha(input) {
+    var v = input.value.trim();
+    if (!v) { input.style.borderColor = ''; return true; }
+    var p = v.split('/');
+    var ok = p.length === 3 && p[0].length === 2 && p[1].length === 2 && p[2].length === 4;
+    if (ok) {
+      var dd = parseInt(p[0], 10), mm = parseInt(p[1], 10), yy = parseInt(p[2], 10);
+      ok = dd >= 1 && dd <= 31 && mm >= 1 && mm <= 12 && yy >= 2000 && yy <= new Date().getFullYear();
+      if (ok) {
+        var f = new Date(yy, mm - 1, dd);
+        ok = f.getFullYear() === yy && f.getMonth() === mm - 1 && f.getDate() === dd;
+      }
+    }
+    input.style.borderColor = ok ? '' : 'var(--rojo)';
+    return ok;
   }
 
   // ── Toggle genérico Si/No ──
