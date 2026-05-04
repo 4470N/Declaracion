@@ -664,7 +664,7 @@
         </div>
         <div class="field">
           <label>Fecha de declaración <span class="req">*</span></label>
-          <input type="date" id="a_los_dias">
+          <input type="date" id="a_los_dias" min="2000-01-01">
         </div>
       </div>
     </div>
@@ -749,11 +749,11 @@
         <div class="row-2">
           <div class="field">
             <label>Fecha del Siniestro <span class="req">*</span></label>
-            <input type="date" id="dia_siniestro">
+            <input type="date" id="dia_siniestro" min="2000-01-01">
           </div>
           <div class="field">
             <label>Hora aproximada <span class="req">*</span></label>
-            <input type="time" id="hora">
+            <input type="time" id="hora" min="00:00" max="23:59">
           </div>
         </div>
         <div class="field">
@@ -1579,6 +1579,12 @@
         this.value = parts.join("-");
       }
     });
+  });
+
+  const hoy = new Date().toISOString().split('T')[0];
+  ["a_los_dias", "dia_siniestro"].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.max = hoy;
   });
 
 });
