@@ -482,9 +482,9 @@
     @media (max-width: 480px) {
       /* Aumentar max-height para contenido expandido en mobile */
       .conditional.visible { max-height: 3000px; }
-    }
       .btn-row { flex-direction: column; }
       .step-label { display: none; }
+      #modalBox { padding: 24px 16px; }
     }
 
     /* ── FOOTER ── */
@@ -531,6 +531,13 @@
       input[type=text], input[type=date], input[type=time], input[type=email],
       input[type=tel], input[type=number], select, textarea { font-size: 16px !important; }
       .btn, button { min-height: 44px; }
+    }
+
+    /* ── Touch: deshabilitar hovers que quedan pegados en iOS/Android ── */
+    @media (hover: none) and (pointer: coarse) {
+      .file-drop:hover   { border-color: var(--border); background: white; }
+      .btn-primary:hover { transform: none; box-shadow: none; background: var(--navy); }
+      .btn-submit:hover  { transform: none; box-shadow: 0 2px 8px rgba(39,174,96,0.2); }
     }
 
   </style>
