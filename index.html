@@ -373,7 +373,7 @@
     .btn-tipo-persona.active { background:var(--navy); color:white; border-color:var(--navy); }
 
     /* ── SCREENS ── */
-    #screenOk, #screenError { display: none; }
+    #screenOk { display: none; }
     #modalEnviando { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9999; align-items:center; justify-content:center; }
     #modalEnviando.activo { display:flex; }
     #modalBox { background:#fff; border-radius:12px; padding:32px 28px; max-width:360px; width:90%; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); }
@@ -1539,22 +1539,20 @@
   </div>
 </div>
 
-<!-- PANTALLA ERROR -->
-<div id="screenError">
-  <div class="screen-card" style="border-top: 4px solid var(--rojo);">
-    <div class="screen-icon">⚠️</div>
-    <h2 style="color:var(--rojo)">No se pudo enviar</h2>
-    <p>Ocurrió un error al enviar tu declaración. Por favor, intentá de nuevo o contactanos directamente.</p>
-    <button class="btn btn-secondary" style="margin-top:16px" onclick="resetError()">Reintentar</button>
-  </div>
-</div>
-
 <!-- MODAL ENVIANDO -->
 <div id="modalEnviando">
   <div id="modalBox">
-    <div id="progressLabel">Preparando documentación...</div>
-    <div id="progressBar"><div id="progressFill"></div></div>
-    <p id="modalMsg">Procesando su información, por favor aguarde...</p>
+    <div id="modalProgress">
+      <div id="progressLabel">Preparando documentación...</div>
+      <div id="progressBar"><div id="progressFill"></div></div>
+      <p id="modalMsg">Procesando su información, por favor aguarde...</p>
+    </div>
+    <div id="modalError" style="display:none">
+      <div style="font-size:32px;margin-bottom:12px">⚠️</div>
+      <h3 style="color:#c0392b;margin:0 0 8px;font-size:17px">No se pudo enviar</h3>
+      <p style="font-size:14px;color:#555;margin:0 0 16px;line-height:1.5">Ocurrió un error al enviar tu declaración. Por favor, intentá de nuevo o contactanos directamente.</p>
+      <button class="btn btn-secondary" onclick="resetError()">Reintentar</button>
+    </div>
   </div>
 </div>
 
@@ -2368,15 +2366,17 @@ function clearErrors(step) {
       window.scrollTo({ top: 0, behavior: "smooth" });
 
     } catch (err) {
-      document.getElementById("modalEnviando").classList.remove("activo");
-      document.getElementById("screenError").style.display = "block";
+      document.getElementById("modalProgress").style.display = "none";
+      document.getElementById("modalError").style.display = "block";
       btn.disabled    = false;
       btn.textContent = "✅ Enviar Declaración Jurada";
     }
   }
 
   function resetError() {
-    document.getElementById("screenError").style.display = "none";
+    document.getElementById("modalEnviando").classList.remove("activo");
+    document.getElementById("modalError").style.display = "none";
+    document.getElementById("modalProgress").style.display = "block";
   }
 </script>
 
