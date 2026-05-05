@@ -373,8 +373,11 @@
     .btn-tipo-persona.active { background:var(--navy); color:white; border-color:var(--navy); }
 
     /* ── SCREENS ── */
-    #screenOk, #screenError, #msgEnviando { display: none; }
-    #msgEnviando { margin-top:16px; }
+    #screenOk, #screenError { display: none; }
+    #modalEnviando { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9999; align-items:center; justify-content:center; }
+    #modalEnviando.activo { display:flex; }
+    #modalBox { background:#fff; border-radius:12px; padding:32px 28px; max-width:360px; width:90%; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); }
+    #modalMsg { font-size:14px; color:#1a3a6b; margin-top:12px; font-weight:500; line-height:1.5; }
     #progressLabel { font-size:13px; color:#1a3a6b; text-align:center; margin-bottom:6px; font-weight:600; }
     #progressBar { width:100%; height:12px; border-radius:8px; background:#dce8f5; overflow:hidden; }
     #progressFill { height:100%; width:0%; border-radius:8px; background:linear-gradient(90deg,#1a3a6b,#4db8d4); transition:width 0.25s ease; position:relative; overflow:hidden; }
@@ -1516,10 +1519,6 @@
       <button class="btn btn-secondary" onclick="prevStep(6)">← Atrás</button>
       <button class="btn btn-submit" id="btnSubmit" onclick="enviarFormulario()">✅ Enviar Declaración Jurada</button>
     </div>
-    <div id="msgEnviando">
-      <div id="progressLabel">Preparando documentación...</div>
-      <div id="progressBar"><div id="progressFill"></div></div>
-    </div>
   </div>
 
 </div><!-- /container -->
@@ -1540,6 +1539,15 @@
     <h2 style="color:var(--rojo)">No se pudo enviar</h2>
     <p>Ocurrió un error al enviar tu declaración. Por favor, intentá de nuevo o contactanos directamente.</p>
     <button class="btn btn-secondary" style="margin-top:16px" onclick="resetError()">Reintentar</button>
+  </div>
+</div>
+
+<!-- MODAL ENVIANDO -->
+<div id="modalEnviando">
+  <div id="modalBox">
+    <div id="progressLabel">Preparando documentación...</div>
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <p id="modalMsg">Procesando su información, por favor aguarde...</p>
   </div>
 </div>
 
@@ -2143,7 +2151,7 @@ function clearErrors(step) {
     const btn = document.getElementById("btnSubmit");
     btn.disabled    = true;
     btn.textContent = "⏳ Enviando declaración...";
-    document.getElementById("msgEnviando").style.display = "block";
+    document.getElementById("modalEnviando").classList.add("activo");
 
     try {
       const [dniFrenteB64, dniDorsoB64, cedulaFrenteB64, cedulaDorsoB64, licFrenteB64, licDorsoB64,
@@ -2348,12 +2356,12 @@ function clearErrors(step) {
 
       document.querySelector(".container").style.display = "none";
       const hero = document.querySelector(".hero"); if (hero) hero.style.display = "none";
-      document.getElementById("msgEnviando").style.display = "none";
+      document.getElementById("modalEnviando").classList.remove("activo");
       document.getElementById("screenOk").style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
 
     } catch (err) {
-      document.getElementById("msgEnviando").style.display = "none";
+      document.getElementById("modalEnviando").classList.remove("activo");
       document.getElementById("screenError").style.display = "block";
       btn.disabled    = false;
       btn.textContent = "✅ Enviar Declaración Jurada";
